@@ -15,7 +15,8 @@ final class DBHelper{
     var dbName : String = "mysqlite.db"
     
     private init() {
-        db = createDatabase()
+        db = createDatabase()           //function call
+        createEmployeeTable()           //function call
     }
     
     func createDatabase() -> OpaquePointer?{
@@ -34,5 +35,28 @@ final class DBHelper{
             print("database is not created successfully")
             return nil
         }
+    }
+    
+    func createEmployeeTable(){
+        let createQueryString = "CREATE TABLE IF NOT EXISTS Employee(employeeId INTEGER PRIMARY KEY NOT NULL, employeeName TEXT, employeeSalary DOUBLE);"
+        var createStatement : OpaquePointer?
+        
+        if sqlite3_prepare_v2(db,
+                              createQueryString,
+                              -1,
+                              &createStatement,
+                              nil) == SQLITE_OK{
+            
+            print("Create Employee Table Query prepared successfully")
+            
+            if sqlite3_step(createStatement) == SQLITE_DONE{
+                print("Sqlite table is created successfully")
+            }else{
+                print("Sqlite table creation is unsuccessful")
+            }
+        }else{
+            print("Create Employee Table Query preparation is unsuccessful")
+        }
+        sqlite3_finalize(createStatement)
     }
 }
