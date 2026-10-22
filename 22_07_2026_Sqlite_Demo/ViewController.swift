@@ -11,8 +11,24 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        DBHelper.shared
-        print("-----------------")
+        
+//        DBHelper.shared.insertDataIntoTable(empId: 123, empName: "Mayur", empSalary: 34523.21)
+//        DBHelper.shared.insertDataIntoTable(empId: 124, empName: "Omkar", empSalary: 34523.21)
+//        DBHelper.shared.insertDataIntoTable(empId: 125, empName: "Kirti", empSalary: 34523.21)
+//        DBHelper.shared.insertDataIntoTable(empId: 126, empName: "Raj", empSalary: 34523.21)
+//        DBHelper.shared.insertDataIntoTable(empId: 127, empName: "Swapnali", empSalary: 34523.21)
+        
+        
+//          DBHelper.shared.insertDataIntoTable(empId: 223, empName: "Mayur", empSalary: 34523.21)
+//          DBHelper.shared.insertDataIntoTable(empId: 224, empName: "Omkar", empSalary: 34523.21)
+//          DBHelper.shared.insertDataIntoTable(empId: 225, empName: "Kirti", empSalary: 34523.21)
+//          DBHelper.shared.insertDataIntoTable(empId: 226, empName: "Raj", empSalary: 34523.21)
+//          DBHelper.shared.insertDataIntoTable(empId: 227, empName: "Swapnali", empSalary: 34523.21)
+        
+        var employees = DBHelper.shared.retriveEmployee()
+        
+        for eachEmp in employees{
+            print(eachEmp)
+        }
     }
 }
