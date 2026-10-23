@@ -133,4 +133,78 @@ final class DBHelper{
         
         return employees
     }
+    
+    func deleteEmployeeRecord(empId : Int){
+        let deleteQueryString = "DELETE FROM Employee where employeeId = ?;"
+        var deleteStatement : OpaquePointer?
+        
+        if sqlite3_prepare_v2(db,
+                              deleteQueryString,
+                              -1,
+                              &deleteStatement,
+                              nil) == SQLITE_OK{
+            
+            if sqlite3_bind_int(deleteStatement, 1, Int32(empId)) != SQLITE_OK{
+                print("---------",String(cString: sqlite3_errmsg(db)))
+            }else{
+                print("success")
+            }
+            
+            if sqlite3_step(deleteStatement) == SQLITE_DONE{
+                print("Query successfullt executed")
+            }else{
+                print("Query execution is unsuccessful")
+            }
+            
+        }else{
+            print(String(cString:sqlite3_errmsg(db)))
+        }
+        sqlite3_finalize(deleteStatement)
+    }
+    
+    func updateEmployeeRecord(empId : Int, newEmpName : String, newEmpSalary : Double){
+        let updateQueryString = "UPDATE Employee SET employeeName = ?, employeeSalary = ? WHERE employeeId = ?;"
+        var updateStatement : OpaquePointer?
+        
+        if sqlite3_prepare_v2(db,
+                              updateQueryString,
+                              -1,
+                              &updateStatement,
+                              nil) == SQLITE_OK{
+            
+            print("Update query prepared successfully")
+            
+            if sqlite3_bind_text(updateStatement,
+                                 1,
+                                 (newEmpName as NSString).utf8String,
+                                 -1,
+                                 nil) != SQLITE_OK{
+                print("-------!-------",String(cString: sqlite3_errmsg(db)))
+            }else{
+                print("Employee name with \(empId) is updated succsfully")
+            }
+            
+            if sqlite3_bind_double(updateStatement, 2, newEmpSalary) != SQLITE_OK{
+                print("-------!--------",String(cString: sqlite3_errmsg(db)))
+            }else{
+                print("Employee salary with \(empId) is updated succsfully")
+            }
+            
+            if sqlite3_bind_int(updateStatement, 3, Int32(empId)) != SQLITE_OK{
+                print("-----------",String(cString: sqlite3_errmsg(db)))
+            }else{
+                print("Employee id to be updated")
+            }
+            
+            if sqlite3_step(updateStatement) == SQLITE_DONE{
+                print("execution success")
+            }else{
+                print("execution falied")
+            }
+        }else{
+            print("Update query prepared successfully")
+            print(String(cString: sqlite3_errmsg(db)))
+        }
+        sqlite3_finalize(updateStatement)
+    }
 }

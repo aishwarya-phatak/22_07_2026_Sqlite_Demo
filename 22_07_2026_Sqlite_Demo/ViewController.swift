@@ -25,8 +25,24 @@ class ViewController: UIViewController {
 //          DBHelper.shared.insertDataIntoTable(empId: 226, empName: "Raj", empSalary: 34523.21)
 //          DBHelper.shared.insertDataIntoTable(empId: 227, empName: "Swapnali", empSalary: 34523.21)
         
-        var employees = DBHelper.shared.retriveEmployee()
+//        var employees = DBHelper.shared.retriveEmployee()
+//        
+//        for eachEmp in employees{
+//            print(eachEmp)
+//        }
         
+//        DBHelper.shared.deleteEmployeeRecord(empId: 225)
+        
+        print("-------------after deletion----------------")
+        
+        var employees = DBHelper.shared.retriveEmployee()
+        for eachEmp in employees{
+            print(eachEmp)
+        }
+        
+        DBHelper.shared.updateEmployeeRecord(empId: 223, newEmpName: "Yash", newEmpSalary: 345234.23)
+        print("-------------after update----------------")
+        employees = DBHelper.shared.retriveEmployee()
         for eachEmp in employees{
             print(eachEmp)
         }
